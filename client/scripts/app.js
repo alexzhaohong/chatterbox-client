@@ -4,6 +4,8 @@ var App = {
 
   username: 'anonymous',
 
+  data: null,
+
   initialize: function() {
     App.username = window.location.search.substr(10);
 
@@ -13,16 +15,24 @@ var App = {
 
     // Fetch initial batch of messages
     App.startSpinner();
-    App.fetch(App.stopSpinner);
+    App.fetch(MessagesView.render);
 
+    // TODO: Fetch again so I don't have to manually reload the page
   },
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
+      // data is an Object with .results, which is an Array of 100 "message" Objects
+      // messages have objectId, username, roomname, text,
 
-      callback();
+      // TODO: Send 'data.results' aka 'message logs' to messages.js and rooms.js
+
+      // SEE data
+      Messages.data = data;
+
+      callback(App.stopSpinner);
     });
   },
 
@@ -34,5 +44,15 @@ var App = {
   stopSpinner: function() {
     App.$spinner.fadeOut('fast');
     FormView.setStatus(false);
+
   }
 };
+
+
+
+
+
+
+// OUTPUT
+// 'first'
+// 'second'
