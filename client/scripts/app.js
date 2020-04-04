@@ -16,8 +16,11 @@ var App = {
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(MessagesView.render);
+    App.$roomSelect = $('#room select');
 
     // TODO: Fetch again so I don't have to manually reload the page
+    setInterval(App.startSpinner, 5000);
+    setInterval(App.stopSpinner, 6000);
   },
 
   fetch: function(callback = ()=>{}) {

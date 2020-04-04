@@ -7,7 +7,6 @@ var FormView = {
   },
 
   handleSubmit: function(event) {
-    // Stop the browser from submitting the form
     event.preventDefault();
 
     //********* Psuedocode */
@@ -25,13 +24,20 @@ var FormView = {
 
     var message = {
       username: App.username,
-      text: '<img src="https://media.giphy.com/media/3orif3VHjBeYBDTGlG/giphy.gif" alt="Trulli" width="300" height="150">',
-      roomname: '',
+      text: $('#message').val(),
+      roomname: $('#rooms select').val() || '',
     };
 
     Parse.create(message);
 
     console.log('click!');
+
+    // TODO: Fetch messages (new only)
+    $('#chats').prepend('<div>click! new message added!</div>');
+
+    // Fetch batch of messages
+    App.startSpinner();
+    App.fetch(MessagesView.render);
   },
 
   setStatus: function(active) {
